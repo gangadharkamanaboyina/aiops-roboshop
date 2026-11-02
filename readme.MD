@@ -1,267 +1,266 @@
-# Roboshop AIOPS Project
+# Intelligent Roboshop --- AI-Powered Cloud Operations Platform
 
-A modern DevOps + AIOps implementation for the Roboshop e-commerce application. This project focuses on automating deployment, monitoring, observability, and intelligent alerting for a multi-service application using GitOps/CI-CD best practices.
+> **Learning and portfolio project:** Evolve the existing Roboshop
+> microservices application into a cloud-native platform, then add
+> observability and AI-assisted operations (AIOps).
 
-## Overview
+## Project goals
 
-Roboshop is a sample online shopping application composed of multiple microservices such as:
+This project is designed to build practical skills across:
 
-- Frontend
-- Catalogue
-- User
-- Cart
-- Shipping
-- Payment
-- Ratings
-- Notification
+-   Applied AI engineering
+-   AIOps and intelligent cloud operations
+-   AWS cloud infrastructure
+-   Microservices and cloud-native deployment
+-   DevOps automation and GitOps
 
-This project adds an AIOps layer to monitor application health, detect anomalies, and automate remediation workflows for production-like environments.
+The focus is on **understanding every component**, building
+incrementally, and validating changes---not blindly accepting
+AI-generated code.
 
-## Goals
+## Existing application
 
-- Deploy Roboshop application reliably across environments
-- Enable automated CI/CD pipelines
-- Centralize logs, metrics, and traces
-- Detect incidents using intelligent monitoring
-- Reduce manual troubleshooting with alert correlation
-- Improve system reliability and application observability
+We are using the existing **Roboshop microservices application** rather
+than creating a new shopping application from scratch.
 
-## Tech Stack
+The documentation repository contains service guides for:
 
-- GitHub / GitLab for source control
-- Jenkins / GitHub Actions / ArgoCD for CI/CD
-- Docker and Kubernetes (EKS / AKS / GKE / on-prem K8s)
-- Helm or Kubernetes manifests for deployments
-- Prometheus + Grafana for monitoring
-- Elasticsearch / Fluentd / Kibana (EFK) or Loki for logs
-- Alertmanager for alerts
-- Python / Shell / Terraform / Ansible for automation
-- AI/ML-based alerting and anomaly detection tools (custom scripts or third-party solutions)
+-   Frontend
+-   Catalogue
+-   User
+-   Cart
+-   Shipping
+-   Payment
+-   Dispatch
+-   MongoDB
+-   Redis
+-   MySQL
+-   RabbitMQ
 
-## Architecture
+Service responsibilities and dependencies will be verified against the
+application documentation and source code before implementation.
 
-The application is deployed as containerized microservices behind a Kubernetes cluster or managed Kubernetes environment. Monitoring and AIOps components collect data from:
+## Planned architecture
 
-- Kubernetes metrics
-- Application logs
-- Infra-level health metrics
-- Service-level traces and dependencies
+``` text
+                         Customer
+                            |
+                         Browser
+                            |
+                      Roboshop Frontend
+                            |
+             +--------------+--------------+
+             |              |              |
+         Catalogue         User           Cart
+             |              |              |
+          MongoDB        Database         Redis
+                            |
+                    Shipping / Payment
+                            |
+                         RabbitMQ
+                            |
+                         Dispatch
 
-The AIOps layer then analyzes the data to:
+      Kubernetes / EKS will host application workloads.
+      Helm will package and manage Kubernetes deployments.
+      Terraform will provision AWS infrastructure.
+      GitHub Actions will implement CI workflows.
+      Argo CD will provide GitOps-based deployment.
+      Prometheus, Grafana and OpenTelemetry will provide observability.
+      Python-based AI/AIOps components will analyze operational signals.
+```
 
-- Detect unusual spikes in latency, CPU, or memory
-- Detect failure patterns across services
-- Correlate alerts across infrastructure and application layers
-- Trigger notifications and automation workflows
+> This is a conceptual overview. The exact service-to-service
+> connections and database mappings will be confirmed from the source
+> documentation before deployment.
 
-## Project Structure
+## Technology stack
 
-```bash
+  Area                        Planned technologies
+  --------------------------- ---------------------------------
+  Cloud                       AWS
+  Infrastructure as Code      Terraform
+  Application                 Existing Roboshop microservices
+  Containers                  Docker
+  Orchestration               Kubernetes, Amazon EKS
+  Kubernetes packaging        Helm
+  CI                          GitHub Actions
+  GitOps                      Argo CD
+  Metrics and dashboards      Prometheus, Grafana
+  Telemetry                   OpenTelemetry
+  AI / AIOps                  Python, machine learning, LLMs
+  API layer for AI services   FastAPI (planned)
+  Source control              Git and GitHub
+
+Technology choices may evolve as the project progresses. Managed AWS
+services will be evaluated based on compatibility, cost, security, and
+learning value.
+
+## Project roadmap
+
+This project will be developed in stages. The schedule is flexible;
+depth of understanding and reliable implementation are more important
+than speed.
+
+### Phase 1 --- Foundation and architecture
+
+-   Review the Roboshop documentation and source code.
+-   Map each microservice, its API, dependencies, and data stores.
+-   Learn Python and software engineering fundamentals.
+-   Establish Git workflow and project documentation.
+
+### Phase 2 --- Containerization
+
+-   Understand each service's runtime and configuration.
+-   Build and test Docker images.
+-   Run the application locally.
+-   Learn container networking, logs, volumes, and health checks.
+
+### Phase 3 --- Kubernetes and Helm
+
+-   Learn Kubernetes fundamentals.
+-   Deploy services locally before moving to managed Kubernetes.
+-   Create Helm charts and values for the application.
+-   Learn service discovery, configuration, secrets, probes, requests,
+    and limits.
+
+### Phase 4 --- AWS and Terraform
+
+-   Learn AWS networking, IAM, compute, storage, and monitoring.
+-   Design secure infrastructure with cost controls.
+-   Provision infrastructure using Terraform.
+-   Deploy to AWS only after reviewing expected costs and account
+    access.
+
+### Phase 5 --- CI/CD and GitOps
+
+-   Build CI workflows with GitHub Actions.
+-   Validate code, build images, and scan artifacts.
+-   Deploy with Helm and Argo CD.
+-   Practice rollback and release troubleshooting.
+
+### Phase 6 --- Observability
+
+-   Instrument application services where feasible.
+-   Collect metrics, logs, and traces.
+-   Build Prometheus and Grafana dashboards.
+-   Establish useful service-level indicators and alerting.
+
+### Phase 7 --- AI and AIOps
+
+-   Build Python foundations and learn practical ML.
+-   Detect unusual metrics and operational patterns.
+-   Correlate alerts and telemetry.
+-   Develop an AI-assisted incident investigation and root-cause
+    analysis workflow.
+-   Use LLMs for explanations and recommendations with evidence.
+-   Add safe, human-approved remediation only after testing.
+
+### Phase 8 --- Capstone and portfolio
+
+-   Document the architecture and deployment process.
+-   Demonstrate CI/CD, observability, and AI-assisted operations.
+-   Include test results, screenshots, dashboards, and lessons learned.
+-   Prepare a project walkthrough for interviews.
+
+## AIOps capabilities (planned)
+
+Potential features to implement incrementally:
+
+-   Metric anomaly detection
+-   Alert grouping and incident correlation
+-   Service dependency context
+-   AI-assisted incident summaries
+-   Evidence-based root-cause hypotheses
+-   Suggested troubleshooting steps
+-   Human-approved remediation workflows
+
+**Safety principle:** AI recommendations must be grounded in observable
+evidence. Automated actions should be restricted, auditable, reversible,
+and disabled by default until thoroughly tested.
+
+## Repository structure
+
+The repository will evolve as implementation begins. A possible future
+layout:
+
+``` text
 aiops-roboshop/
-├── app/                  # Roboshop application source code
-├── infra/                # Terraform / Helm / K8s manifests
-├── monitoring/           # Prometheus, Grafana, Alertmanager configs
-├── logging/              # Fluentd / ELK / Loki configuration
-├── pipelines/            # CI/CD configuration (Jenkins/GitHub Actions)
-├── scripts/              # Automation, setup, deployment helpers
-├── dashboards/           # Grafana dashboards
-├── docs/                 # Architecture and runbooks
-├── README.md             # Project documentation
-└── .gitignore
+├── README.md
+├── docs/
+│   ├── architecture/
+│   ├── decisions/
+│   └── runbooks/
+├── services/
+├── docker/
+├── helm/
+├── terraform/
+├── observability/
+├── aiops/
+├── tests/
+└── .github/
+    └── workflows/
 ```
 
-## Prerequisites
+This is a proposed structure, not a claim that these directories already
+exist.
 
-Before running the project, ensure you have:
+## Development principles
 
-- Linux/macOS environment
-- Docker installed
-- Kubernetes cluster access
-- kubectl configured
-- Helm installed (if used)
-- Git configured
-- Access to a container registry
-- Monitoring tools configured (Prometheus/Grafana)
+1.  Learn the fundamentals before relying on automation.
+2.  Make small, reviewable changes.
+3.  Use Git branches and inspect diffs.
+4.  Test changes locally before cloud deployment.
+5.  Never commit credentials, tokens, private keys, or secrets.
+6.  Use least-privilege AWS IAM permissions.
+7.  Keep AWS resources private by default and expose only what is
+    required.
+8.  Monitor costs and clean up unused resources.
+9.  Document decisions, failures, and fixes.
+10. Use AI coding tools as assistants; review and understand every
+    change.
 
-## Environment Setup
+## AWS cost and security
 
-1. Clone the repository
+AWS resources can incur charges even during learning.
 
-```bash
-git clone <repository-url>
-cd aiops-roboshop
-```
+Before deploying cloud infrastructure:
 
-2. Configure the environment variables
+-   Confirm the account is active and service access works.
+-   Review the AWS pricing page and expected costs.
+-   Set up billing alerts and budgets.
+-   Use least-privilege IAM.
+-   Avoid exposing databases or Kubernetes control-plane access
+    publicly.
+-   Do not put AWS access keys or other secrets in this repository.
+-   Destroy temporary infrastructure when it is no longer needed, after
+    verifying what will be deleted.
 
-```bash
-cp .env.example .env
-# Update values as needed
-```
+## Current status
 
-3. Deploy infrastructure
+-   [x] Created the local `aiops-roboshop` Git repository.
+-   [x] Created the initial README commit.
+-   [ ] Connect the local repository to GitHub.
+-   [ ] Review the Roboshop architecture and source code.
+-   [ ] Map service dependencies and runtime requirements.
+-   [ ] Begin hands-on implementation.
 
-```bash
-cd infra
-terraform init
-terraform plan
-terraform apply
-```
+## Learning approach
 
-4. Deploy the application
+We will work step by step. For each command or implementation:
 
-```bash
-kubectl apply -f k8s/
-```
+-   Understand what it does.
+-   Understand why it is needed.
+-   Know what output or behavior to expect.
+-   Validate the result.
+-   Troubleshoot errors before moving on.
 
-or
+The goal is not merely to deploy Roboshop. The goal is to understand how
+to build, operate, observe, and improve a cloud-native application with
+AI-assisted operations.
 
-```bash
-helm install roboshop ./helm/roboshop
-```
+------------------------------------------------------------------------
 
-## CI/CD Workflow
-
-This project can use a pipeline to automate the following:
-
-- Build Docker images for each service
-- Run unit/integration tests
-- Security scanning
-- Package Helm charts or manifests
-- Push to registry
-- Deploy to dev/staging/prod
-- Validate health checks
-
-Typical pipeline steps:
-
-```bash
-1. Developer pushes code to Git
-2. CI pipeline triggers
-3. Build and test services
-4. Scan images and code quality
-5. Deploy to Kubernetes
-6. Monitor health and alerting
-7. Trigger automated remediation if needed
-```
-
-## Monitoring and AIOps
-
-### Metrics
-
-Capture critical metrics such as:
-
-- CPU and memory usage
-- Pod readiness and restarts
-- Request latency
-- Error rate
-- Database connection count
-- Queue latency
-
-### Logs
-
-Collect structured logs from all services to enable:
-
-- Searchable log analysis
-- Anomaly detection
-- Failed deployment root-cause analysis
-- Trend observation over time
-
-### Alerting
-
-Configure alert rules for:
-
-- Service downtime
-- High CPU or memory spikes
-- High error rate
-- Latency regression
-- Database failures
-- Deployment failures
-
-### AIOps Capabilities
-
-The AIOps layer can include:
-
-- Baseline anomaly detection
-- Alert deduplication and grouping
-- Log pattern analysis
-- Root cause classification
-- Predictive alerting for high-risk events
-- Auto-remediation actions using scripts and automation
-
-## Useful Commands
-
-```bash
-# Check cluster health
-kubectl get nodes
-kubectl get pods -A
-
-# View logs for a service
-kubectl logs -l app=frontend
-
-# Describe a failing pod
-kubectl describe pod <pod-name>
-
-# Check deployment status
-kubectl get deploy -A
-
-# Check service endpoints
-kubectl get svc -A
-```
-
-## Troubleshooting
-
-Common issues include:
-
-- Pods stuck in CrashLoopBackOff
-- Image pull errors from registry
-- Ingress or LoadBalancer misconfiguration
-- Database connectivity failures
-- Prometheus targets down
-- Missing secrets or config maps
-
-Useful debugging steps:
-
-```bash
-kubectl get events -A --sort-by=.metadata.creationTimestamp
-kubectl describe deployment <deployment-name>
-kubectl logs <pod-name> -n <namespace>
-```
-
-## Security Considerations
-
-- Use Kubernetes secrets for sensitive values
-- Restrict RBAC permissions
-- Scan Docker images for vulnerabilities
-- Enable network policies where required
-- Protect monitoring endpoints
-- Keep dependencies patched
-
-## Future Enhancements
-
-- Add predictive alerts using ML models
-- Integrate incident management tools (e.g., Jira, ServiceNow)
-- Add auto-healing workflows for common issues
-- Expand dashboards and service-level objectives (SLOs)
-- Enable chaos engineering for resilience validation
-
-## Contribution
-
-Contributions are welcome. Please follow the repository workflow:
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit changes with a clear message
-4. Open a pull request
-5. Validate with CI checks and monitoring tests
-
-## License
-
-This project is licensed under the MIT License unless otherwise specified.
-
-## Contact
-
-For questions or collaboration, contact the project owner or maintainers.
-
----
-
-This README can be updated as the project grows. Add service-specific architecture details, deployment scripts, environment configs, and screenshots for better documentation.
+**Project name:** Intelligent Roboshop\
+**Focus:** Applied AI + AIOps + AWS + Cloud-Native DevOps\
+**Status:** Learning and development
